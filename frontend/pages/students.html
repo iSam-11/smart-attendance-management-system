@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Management - Smart Attendance System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <div class="app-shell">
+    <div id="app-sidebar" class="sidebar"></div>
+
+    <div class="main-wrapper">
+      <div id="app-header" class="top-header"></div>
+
+      <div class="main-content">
+        <!-- Toolbar Filters -->
+        <div class="toolbar">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchStudent" class="form-control" placeholder="Search by name, roll no, or ID...">
+          </div>
+
+          <div class="filter-group">
+            <select id="filterDepartment" class="form-select">
+              <!-- Populated by JS -->
+            </select>
+
+            <label class="flex items-center gap-2" style="font-size:0.85rem; cursor:pointer;">
+              <input type="checkbox" id="filterLowAttendance">
+              <span class="text-danger font-semibold"><i class="fas fa-filter"></i> Low Attendance (< 75%)</span>
+            </label>
+
+            <button class="btn btn-primary" onclick="AppUtils.openModal('addStudentModal')">
+              <i class="fas fa-plus"></i> Add Student
+            </button>
+          </div>
+        </div>
+
+        <!-- Student Data Table -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fas fa-user-graduate text-primary"></i>
+              Enrolled Students (<span id="totalStudentsCount">0</span>)
+            </div>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Roll No</th>
+                    <th>Student Name</th>
+                    <th>Department</th>
+                    <th>Section</th>
+                    <th>Year</th>
+                    <th>Attendance %</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="studentsTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <footer class="app-footer">
+        <div>Smart Attendance Management System &copy; 2026</div>
+        <div>Admin Portal</div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Add Student Modal -->
+  <div class="modal-overlay" id="addStudentModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-user-plus text-primary"></i> Add New Student</h3>
+        <button class="modal-close" onclick="AppUtils.closeModal('addStudentModal')">&times;</button>
+      </div>
+      <form id="addStudentForm">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input type="text" id="addStudentFirstName" class="form-control" required placeholder="e.g. Aarav">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input type="text" id="addStudentLastName" class="form-control" required placeholder="e.g. Sharma">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Roll Number</label>
+              <input type="text" id="addStudentRoll" class="form-control" required placeholder="e.g. 24CSE010">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" id="addStudentEmail" class="form-control" required placeholder="student@college.edu">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Department</label>
+              <select id="addStudentDept" class="form-select" required></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Admission Year</label>
+              <input type="number" id="addStudentYear" class="form-control" value="2024" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="AppUtils.closeModal('addStudentModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Student</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/layout.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/students.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      StudentsModule.init();
+    });
+  </script>
+</body>
+</html>

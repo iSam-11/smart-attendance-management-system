@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Correction Requests - Smart Attendance System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <div class="app-shell">
+    <div id="app-sidebar" class="sidebar"></div>
+
+    <div class="main-wrapper">
+      <div id="app-header" class="top-header"></div>
+
+      <div class="main-content">
+        <!-- Status Filter Tabs -->
+        <div class="flex justify-between items-center" style="margin-bottom: 1rem;">
+          <div class="tabs" style="margin-bottom: 0;">
+            <div class="tab-item active" data-status="">All Requests</div>
+            <div class="tab-item" data-status="PENDING">Pending Review</div>
+            <div class="tab-item" data-status="APPROVED">Approved</div>
+            <div class="tab-item" data-status="REJECTED">Rejected</div>
+          </div>
+
+          <button class="btn btn-primary" id="newCorrectionBtn">
+            <i class="fas fa-plus-circle"></i> Request Attendance Correction
+          </button>
+        </div>
+
+        <!-- Correction Requests Data Table -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fas fa-tasks text-primary"></i>
+              Attendance Correction Requests Log
+            </div>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Req ID</th>
+                    <th>Student Name</th>
+                    <th>Subject & Date</th>
+                    <th>Status Change</th>
+                    <th>Reason</th>
+                    <th>Request Status</th>
+                    <th>Actions / Review</th>
+                  </tr>
+                </thead>
+                <tbody id="correctionsTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <footer class="app-footer">
+        <div>Smart Attendance Management System &copy; 2026</div>
+        <div>Audit & Correction Portal</div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- New Correction Request Modal (For Students) -->
+  <div class="modal-overlay" id="newCorrectionModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-edit text-primary"></i> Request Attendance Correction</h3>
+        <button class="modal-close" onclick="AppUtils.closeModal('newCorrectionModal')">&times;</button>
+      </div>
+      <form id="newCorrectionForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Select Absent Record</label>
+            <select id="correctionRecordSelect" class="form-select" required></select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Reason for Correction Request</label>
+            <textarea id="correctionReasonInput" class="form-textarea" rows="3" required placeholder="Explain why your attendance status was recorded incorrectly (e.g. scanner error, medical leave)..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="AppUtils.closeModal('newCorrectionModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Submit Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Review Correction Request Modal (For Faculty / Admin) -->
+  <div class="modal-overlay" id="reviewCorrectionModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-gavel text-warning"></i> Review Correction Request</h3>
+        <button class="modal-close" onclick="AppUtils.closeModal('reviewCorrectionModal')">&times;</button>
+      </div>
+      <form id="reviewCorrectionForm">
+        <div class="modal-body">
+          <div style="background: var(--bg-main); padding: 1rem; border-radius: var(--border-radius-md); margin-bottom: 1rem;">
+            <div style="font-size: 0.8rem; color: var(--text-muted);">STUDENT:</div>
+            <div class="font-bold" id="reviewReqStudentName">Student Name</div>
+
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">SUBJECT & DATE:</div>
+            <div class="font-semibold" id="reviewReqSubjectDate">Subject Code • Date</div>
+
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">STUDENT'S REASON:</div>
+            <div class="text-secondary" id="reviewReqReason">"Reason text"</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Reviewer Remarks / Comment</label>
+            <textarea id="reviewCommentInput" class="form-textarea" rows="2" placeholder="Provide justification for approval or rejection..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" onclick="CorrectionsModule.handleReviewSubmit('REJECTED')">
+            <i class="fas fa-times"></i> Reject
+          </button>
+          <button type="button" class="btn btn-success" onclick="CorrectionsModule.handleReviewSubmit('APPROVED')">
+            <i class="fas fa-check"></i> Approve
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/layout.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/corrections.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      CorrectionsModule.init();
+    });
+  </script>
+</body>
+</html>

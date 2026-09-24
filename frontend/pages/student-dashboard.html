@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard - Smart Attendance System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <div class="app-shell">
+    <div id="app-sidebar" class="sidebar"></div>
+
+    <div class="main-wrapper">
+      <div id="app-header" class="top-header"></div>
+
+      <div class="main-content">
+        <!-- Low Attendance Alert Banner (If < 75%) -->
+        <div class="alert-banner" id="student-low-alert" style="display: none;">
+          <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <div class="alert-content">
+            <div class="alert-title">Low Attendance Warning</div>
+            <div class="alert-desc">Your overall attendance is below the 75% institutional threshold. Please attend upcoming lectures and consult your academic advisor.</div>
+          </div>
+        </div>
+
+        <!-- Student Overview Grid -->
+        <div class="dashboard-grid-2">
+          <!-- Overall Attendance Gauge Card -->
+          <div class="card flex items-center justify-center" style="padding: 2rem; text-align: center;">
+            <h4 class="text-muted" style="margin-bottom: 1rem;">Overall Cumulative Attendance</h4>
+            <div class="progress-ring-container" style="width: 160px; height: 160px;">
+              <div class="progress-ring-text">
+                <span class="progress-ring-percentage" id="student-overall-percentage">88.5%</span>
+                <span class="progress-ring-label">Good Standing</span>
+              </div>
+            </div>
+            <div style="margin-top: 1rem;">
+              <a href="corrections.html" class="btn btn-sm btn-primary">
+                <i class="fas fa-edit"></i> Request Attendance Correction
+              </a>
+            </div>
+          </div>
+
+          <!-- Subject Breakdown Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fas fa-book-open text-primary"></i>
+                Subject-wise Attendance
+              </div>
+            </div>
+            <div class="card-body" style="padding: 0;">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Subject</th>
+                      <th>Attended / Total</th>
+                      <th>Percentage</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="student-subject-table">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Corrections Status Timeline -->
+        <div class="card" style="margin-top: 1.5rem;">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fas fa-tasks text-info"></i>
+              Correction Requests Tracker
+            </div>
+            <a href="corrections.html" class="btn btn-sm btn-secondary">Submit New Request</a>
+          </div>
+          <div class="card-body" id="student-corrections-list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+      </div>
+
+      <footer class="app-footer">
+        <div>Smart Attendance Management System &copy; 2026</div>
+        <div>Student Portal</div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/layout.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/dashboard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      DashboardModule.initStudentDashboard();
+    });
+  </script>
+</body>
+</html>

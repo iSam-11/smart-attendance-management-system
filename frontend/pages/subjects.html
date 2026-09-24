@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subject Management - Smart Attendance System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <div class="app-shell">
+    <div id="app-sidebar" class="sidebar"></div>
+
+    <div class="main-wrapper">
+      <div id="app-header" class="top-header"></div>
+
+      <div class="main-content">
+        <!-- Toolbar Filters -->
+        <div class="toolbar">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchSubject" class="form-control" placeholder="Search subjects by code or name...">
+          </div>
+
+          <div class="filter-group">
+            <select id="filterSubjectDept" class="form-select"></select>
+
+            <button class="btn btn-primary" onclick="AppUtils.openModal('addSubjectModal')">
+              <i class="fas fa-plus"></i> Add New Subject
+            </button>
+          </div>
+        </div>
+
+        <!-- Subjects Data Table -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fas fa-book-open text-primary"></i>
+              Course Subjects (<span id="totalSubjectsCount">0</span>)
+            </div>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Subject Code</th>
+                    <th>Subject Name</th>
+                    <th>Credits</th>
+                    <th>Department</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="subjectsTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <footer class="app-footer">
+        <div>Smart Attendance Management System &copy; 2026</div>
+        <div>Admin Portal</div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Add Subject Modal -->
+  <div class="modal-overlay" id="addSubjectModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-book text-primary"></i> Add New Course Subject</h3>
+        <button class="modal-close" onclick="AppUtils.closeModal('addSubjectModal')">&times;</button>
+      </div>
+      <form id="addSubjectForm">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Subject Code</label>
+              <input type="text" id="addSubjectCode" class="form-control" required placeholder="e.g. CS501">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Credits</label>
+              <input type="number" id="addSubjectCredits" class="form-control" value="4" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Subject Name</label>
+            <input type="text" id="addSubjectName" class="form-control" required placeholder="e.g. Data Structures & Algorithms">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Department</label>
+            <select id="addSubjectDept" class="form-select" required></select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="AppUtils.closeModal('addSubjectModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Subject</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/layout.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/subjects.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      SubjectsModule.init();
+    });
+  </script>
+</body>
+</html>

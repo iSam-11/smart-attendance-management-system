@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Management - Smart Attendance System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <div class="app-shell">
+    <div id="app-sidebar" class="sidebar"></div>
+
+    <div class="main-wrapper">
+      <div id="app-header" class="top-header"></div>
+
+      <div class="main-content">
+        <!-- Toolbar Filters -->
+        <div class="toolbar">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchFaculty" class="form-control" placeholder="Search faculty by name or employee ID...">
+          </div>
+
+          <div class="filter-group">
+            <select id="filterFacultyDept" class="form-select"></select>
+
+            <button class="btn btn-primary" onclick="AppUtils.openModal('addFacultyModal')">
+              <i class="fas fa-plus"></i> Add Faculty Member
+            </button>
+          </div>
+        </div>
+
+        <!-- Faculty Data Table -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fas fa-chalkboard-teacher text-primary"></i>
+              Faculty Members (<span id="totalFacultyCount">0</span>)
+            </div>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Emp ID</th>
+                    <th>Faculty Name</th>
+                    <th>Department</th>
+                    <th>Assigned Subjects</th>
+                    <th>Assigned Sections</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="facultyTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <footer class="app-footer">
+        <div>Smart Attendance Management System &copy; 2026</div>
+        <div>Admin Portal</div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Add Faculty Modal -->
+  <div class="modal-overlay" id="addFacultyModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-user-plus text-primary"></i> Add New Faculty Member</h3>
+        <button class="modal-close" onclick="AppUtils.closeModal('addFacultyModal')">&times;</button>
+      </div>
+      <form id="addFacultyForm">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input type="text" id="addFacultyFirstName" class="form-control" required placeholder="e.g. Dr. Rajesh">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input type="text" id="addFacultyLastName" class="form-control" required placeholder="e.g. Sharma">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" id="addFacultyEmail" class="form-control" required placeholder="faculty@college.edu">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Department</label>
+              <select id="addFacultyDept" class="form-select" required></select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="AppUtils.closeModal('addFacultyModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Faculty</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/layout.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/faculty.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      FacultyModule.init();
+    });
+  </script>
+</body>
+</html>

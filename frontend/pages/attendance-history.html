@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance History - Smart Attendance System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <div class="app-shell">
+    <div id="app-sidebar" class="sidebar"></div>
+
+    <div class="main-wrapper">
+      <div id="app-header" class="top-header"></div>
+
+      <div class="main-content">
+        <!-- Toolbar Filters -->
+        <div class="toolbar">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="historyFilterSearch" class="form-control" placeholder="Search by student name, roll no, or subject...">
+          </div>
+
+          <div class="filter-group">
+            <select id="historyFilterSubject" class="form-select"></select>
+            <select id="historyFilterSection" class="form-select"></select>
+            <select id="historyFilterStatus" class="form-select">
+              <option value="">All Statuses</option>
+              <option value="PRESENT">PRESENT</option>
+              <option value="ABSENT">ABSENT</option>
+            </select>
+            <input type="date" id="historyStartDate" class="form-control" style="width:auto;" title="Start Date">
+            <input type="date" id="historyEndDate" class="form-control" style="width:auto;" title="End Date">
+
+            <button class="btn btn-secondary" id="exportHistoryCsvBtn">
+              <i class="fas fa-file-csv"></i> Export CSV
+            </button>
+          </div>
+        </div>
+
+        <!-- Attendance History Data Table -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fas fa-history text-primary"></i>
+              Attendance History Records (<span id="totalHistoryCount">0</span>)
+            </div>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Session</th>
+                    <th>Section</th>
+                    <th>Subject</th>
+                    <th>Student Name & Roll</th>
+                    <th>Status</th>
+                    <th>Marked By</th>
+                    <th>Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody id="historyTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <footer class="app-footer">
+        <div>Smart Attendance Management System &copy; 2026</div>
+        <div>Historical Audit Records</div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/layout.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/attendance-history.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      AttendanceHistoryModule.init();
+    });
+  </script>
+</body>
+</html>

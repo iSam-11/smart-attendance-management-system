@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Attendance Management System</title>
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #ffffff;
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .loading-box {
+      text-align: center;
+    }
+    .spinner {
+      border: 4px solid rgba(255,255,255,0.1);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border-left-color: #6366f1;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <div>Loading Smart Attendance System...</div>
+  </div>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!AuthService.isAuthenticated()) {
+        window.location.href = 'pages/login.html';
+      } else {
+        const user = AuthService.getCurrentUser();
+        if (user.role === 'ADMIN') window.location.href = 'pages/admin-dashboard.html';
+        else if (user.role === 'FACULTY') window.location.href = 'pages/faculty-dashboard.html';
+        else window.location.href = 'pages/student-dashboard.html';
+      }
+    });
+  </script>
+</body>
+</html>
